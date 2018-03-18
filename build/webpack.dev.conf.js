@@ -16,7 +16,6 @@ const PORT = process.env.PORT && Number(process.env.PORT)
 
 var app = express()
 var appData = require('../data.json');
-console.log(appData);
 var seller = appData.seller;
 var goods = appData.goods;
 var ratings = appData.ratings;
@@ -45,7 +44,7 @@ apiRoutes.get('/ratings', function (req, res) {
 });
 
 app.use('/api', apiRoutes);
-app.listen(8080);
+
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -56,6 +55,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
+
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
@@ -102,7 +102,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   ]
 })
 
-module.exports = new Promise((resolve, reject) => {
+module.exports=new Promise((resolve, reject) => {
   portfinder.basePort = process.env.PORT || config.dev.port
   portfinder.getPort((err, port) => {
     if (err) {
@@ -125,5 +125,9 @@ module.exports = new Promise((resolve, reject) => {
 
       resolve(devWebpackConfig)
     }
-  })
-})
+  });
+  //为什么加上了，就会页面访问不了。url的数据模拟接口却可以。需要思考为啥。
+  // app.listen(8080,function(err){
+  //   console.log(err);
+  // });
+});

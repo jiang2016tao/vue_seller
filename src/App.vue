@@ -1,7 +1,23 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+  <div >
+    <div class="header">
+      header
+    </div>
+    <div class="tab">
+      <div class="tab-item">
+        <router-link to="/goods">商品</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/ratings">评价</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/seller">商家</router-link>
+      </div>
+    </div>
+    <div class="body-content">
+      <router-view/>
+    </div>
+    <!--<router-view/>-->
   </div>
 </template>
 
@@ -12,12 +28,21 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  .tab{
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #eeeeee;
+  }
+  .tab-item{
+    flex: 1;
+    text-align: center;
+  }
+  .tab-item a{
+    text-decoration: none;
+    display: block;
+  }
+  .tab-item a.router-link-active{
+    color: red;
+  }
 </style>
