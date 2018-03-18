@@ -15,8 +15,6 @@ const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
 var app = express()
-console.log("app:");
-console.log(app);
 var appData = require('../data.json');
 console.log(appData);
 var seller = appData.seller;
@@ -24,8 +22,6 @@ var goods = appData.goods;
 var ratings = appData.ratings;
 
 var apiRoutes = express.Router();
-console.log("apiRoutes");
-console.log(apiRoutes);
 
 apiRoutes.get('/seller', function (req, res) {
   res.json({
