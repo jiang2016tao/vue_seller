@@ -1,8 +1,6 @@
 <template>
   <div >
-    <div class="header">
-      header
-    </div>
+    <header-div></header-div>
     <div class="tab">
       <div class="tab-item">
         <router-link to="/goods">商品</router-link>
@@ -22,12 +20,18 @@
 </template>
 
 <script>
+
+  import header from "./components/header/header";
 export default {
-  name: 'App'
+  name: 'App',
+  components:{
+    headerDiv:header
+  }
 }
 </script>
 
 <style>
+  @import "../static/css/reset.css";
   .tab{
     display: flex;
     height: 40px;
