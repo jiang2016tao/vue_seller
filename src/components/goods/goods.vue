@@ -1,6 +1,6 @@
 <template>
   <div class="goods">
-    <div class="menu-goods">
+    <div class="menu-goods" ref="menuWrapper">
       <ul>
         <li v-for="good in goods" class="goods-li">
           <span class="goods-li-span">
@@ -39,14 +39,21 @@
 </template>
 <script>
   import data from "../../../data.json";
+  import BScroll from "better-scroll";
   export default {
     data(){
       return {
-        goods:null
+        goods:null,
+        menuScroll:null
       }
     },
     created(){
       this.goods=data.goods;
+    },
+    mounted(){
+      this.$nextTick(()=>{
+        this.menuScroll=new BScroll(this.$refs.menuWrapper,{});
+      })
     }
   }
 </script>
