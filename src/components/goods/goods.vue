@@ -2,16 +2,16 @@
   <div class="goods">
     <div class="menu-goods" ref="menuWrapper">
       <ul>
-        <li v-for="good in goods" class="goods-li">
+        <li v-for="(good,index) in goods" class="goods-li" :class="{'active':currentIndex===index}" @click="selectMennu(index,$event)">
           <span class="goods-li-span">
             <span>{{good.name}}</span>
           </span>
         </li>
       </ul>
     </div>
-    <div class="list-goods">
+    <div class="list-goods" ref="foodsWrapper">
       <ul>
-        <li v-for="good in goods">
+        <li v-for="good in goods" class="good-li-hood">
           <h1 class="good-title">{{good.name}}</h1>
           <ul>
             <li v-for="food in good.foods" class="food-wrapper">
@@ -44,7 +44,10 @@
     data(){
       return {
         goods:null,
-        menuScroll:null
+        menuScroll:null,
+        foodsScroll:null,
+        foodLiHeights:[],
+        scrollY:0
       }
     },
     created(){
@@ -52,8 +55,42 @@
     },
     mounted(){
       this.$nextTick(()=>{
-        this.menuScroll=new BScroll(this.$refs.menuWrapper,{});
+        this.menuScroll=new BScroll(this.$refs.menuWrapper,{
+          click:true
+        });
+        this.foodsScroll=new BScroll(this.$refs.foodsWrapper,{
+          probeType:3//能实时监听滚动的位置
+        });
+        this.foodsScroll.on("scroll",(pos)=>{
+          this.scrollY=Math.abs(Math.round(pos.y));
+        });
+        var _height=0;
+        this.foodLiHeights.push(_height);
+        let foods=this.$refs.foodsWrapper.getElementsByClassName("good-li-hood");
+        for(let i=0;i<foods.length;i++){
+          _height=_height+foods[i].clientHeight;
+          this.foodLiHeights.push(_height);
+        }
       })
+    },
+    computed:{
+      currentIndex:function () {
+        for(let i=0;i<this.foodLiHeights.length;i++){
+          let _height1=this.foodLiHeights[i];
+          let _height2=this.foodLiHeights[i+1];
+          if(!_height2 || (this.scrollY>=_height1&&this.scrollY<_height2)){
+            return i
+          }
+        }
+        return 0;
+      }
+    },
+    methods:{
+      selectMennu:function(index,event){
+        let foods=this.$refs.foodsWrapper.getElementsByClassName("good-li-hood");
+        this.foodsScroll.scrollToElement(foods[index],300);
+        console.log(index);
+      }
     }
   }
 </script>
@@ -80,6 +117,10 @@
     display: table;
     width: 56px;
     padding: 0 12px;
+  }
+  .goods-li.active{
+    background-color: #ffffff;
+    font-weight: 700!important;
   }
   .goods-li-span{
     display: table-cell;
