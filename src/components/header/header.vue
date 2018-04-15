@@ -16,7 +16,7 @@
           <div class="sup-div">
             <span class="sup-pre"></span>
             <span class="sup-div-title">{{seller.supports[0].description}}</span>
-            <span class="sup-div-title sup-count" v-show="seller.supports">{{seller.supports.length}}个&nbsp;></span>
+            <span class="sup-div-title sup-count" v-show="seller.supports" @click="showDetail()">{{seller.supports.length}}个&nbsp;></span>
           </div>
         </div>
       </div>
@@ -26,6 +26,11 @@
       <span class="bulletin-div-content">{{seller.bulletin}}</span>
       <span class="bulletin-div-right">&gt;</span>
     </div>
+
+    <div class="detail-div" v-show="isDetailShow">
+      <div class="detail-content-div"></div>
+      <div class="detail-foot-div" @click="closeDetail()">X</div>
+    </div>
   </div>
 </template>
 <script>
@@ -33,11 +38,20 @@
   export default {
     data(){
       return {
-        seller:null
+        seller:null,
+        isDetailShow:false
       }
     },
     created(){
       this.seller=data.seller;
+    },
+    methods:{
+      showDetail:function(){
+        this.isDetailShow=true;
+      },
+      closeDetail:function(){
+        this.isDetailShow=false;
+      }
     }
   }
 </script>
@@ -128,5 +142,22 @@
     float: right;
     line-height: 20px;
     margin-right: 10px;
+  }
+  .detail-div{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height:100%;
+    background: rgba(114,114,144,0.6);
+    color: #ffffff;
+  }
+  .detail-foot-div{
+    height: 80px;
+    text-align: center;
+  }
+  .detail-content-div{
+    max-height: calc( 100% - 80px);
   }
 </style>

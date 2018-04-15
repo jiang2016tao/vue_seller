@@ -1,9 +1,125 @@
 <template>
-  <div>
-    goods
+  <div class="goods">
+    <div class="menu-goods">
+      <ul>
+        <li v-for="good in goods" class="goods-li">
+          <span class="goods-li-span">
+            <span>{{good.name}}</span>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <div class="list-goods">
+      <ul>
+        <li v-for="good in goods">
+          <h1 class="good-title">{{good.name}}</h1>
+          <ul>
+            <li v-for="food in good.foods" class="food-wrapper">
+              <div>
+                <img :src="food.icon"/>
+              </div>
+              <div class="food-content">
+                <h2 class="food-title">{{food.name}}</h2>
+                <p class="food-desc">{{food.description}}</p>
+                <div class="food-sell">
+                  <span>月售{{food.sellCount}}份</span>
+                  <span class="food-sell-rating">好评率{{food.rating}}%</span>
+                </div>
+                <div>
+                  <span class="food-price">￥{{food.price}}</span>
+                  <span v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
+  import data from "../../../data.json";
+  export default {
+    data(){
+      return {
+        goods:null
+      }
+    },
+    created(){
+      this.goods=data.goods;
+    }
+  }
 </script>
 <style scoped>
+  .goods{
+    position: absolute;
+    top: 195px;
+    bottom: 40px;
+    display: flex;
+    overflow: hidden;
+  }
+  .menu-goods{
+    flex: 0 0 80;
+    width: 80px;
+    background: #f3f5f7;
+    font-weight: 200;
+    line-height: 14px;;
+  }
+  .goods-li{
+    height: 108px;
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
+    display: table;
+    width: 56px;
+    padding: 0 12px;
+  }
+  .goods-li-span{
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .list-goods{
+    flex: 1;
+  }
+  .good-title{
+    background: #f3f5f7;
+    padding-right: 14px;
+    font-size: 12px;
+    color: rgb(147,153,159);
+    line-height: 26px;
+  }
+  .food-wrapper{
+    display: flex;
+    margin:18px;
+  }
+  .food-content{
+    margin: 0 0 0 10px;
+  }
+  .food-title{
+    font-size: 14px;
+    line-height: 14px;
+    color: rgb(7,17,27);
+    margin: 2px 0 0 0;
+  }
+  .food-desc{
+    font-size: 10px;
+    color: rgb(147,153,159);
+    line-height: 10px;
+    padding: 8px 0;
+  }
+  .food-sell{
+    font-size: 10px;
+    color: rgb(147,153,159);
+    line-height: 10px;
+    padding: 0 0 8px 0;
+  }
+  .food-sell-rating{
+    margin: 0 0 0 12px;
+  }
+  .food-price{
+    font-size: 14px;
+    color:red;
+    font-weight: 700;
+    line-height: 24px;
+  }
 </style>
