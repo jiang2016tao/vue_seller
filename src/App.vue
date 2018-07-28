@@ -42,6 +42,7 @@ export default {
     flex: 1;
     text-align: center;
   }
+
   .tab-item a{
     text-decoration: none;
     display: block;
